@@ -13,7 +13,7 @@ const Work = () => {
         <div className='grid lg:grid-cols-4 lg:gap-5 gap-3 grid-cols-1 md:grid-cols-2'>
           {  data.map((item) => ( 
             <div key={item.id} className='border rounded-lg shadow-xl p-4 space-y-2'>
-                 <TbTruckDelivery size={50} />
+                 <TbTruckDelivery size={50} className='text-secondary' />
      <h3 className='text-lg font-semibold text-secondary'>{item.title}</h3>
      <p className='text-sm font-light'>{item.description} </p>
     </div>
