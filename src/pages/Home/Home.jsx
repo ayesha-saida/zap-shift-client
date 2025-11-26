@@ -4,6 +4,9 @@ import Work from './Work/Work'
 import Service from './Service/Service'
 import Brands from './Brands/Brands'
 import Reviews from './Reviews/Reviews'
+import Features from './Features/Features'
+import HeroBanner from './Features/heroBanner'
+import AskFAQ from './FAQ/AskFAQ'
 
 const Home = () => {
   return (
@@ -12,7 +15,10 @@ const Home = () => {
         <Work></Work>
         <Service></Service>
         <Brands></Brands>
+        <Features></Features>
+      <HeroBanner></HeroBanner>
         <Reviews></Reviews>
+        <AskFAQ></AskFAQ>
     </div>
   )
 }

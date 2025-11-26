@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../../../components/Logo/Logo'
-import { NavLink } from 'react-router'
+import { Link, NavLink } from 'react-router'
 import { MdArrowOutward } from "react-icons/md";
 
 const Navbar = () => {
@@ -25,7 +25,7 @@ const Navbar = () => {
        {links}
       </ul>
     </div>
-    <a className="text-xl"><Logo /></a>
+    <Link to={'/'} className="text-xl"><Logo /></Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
