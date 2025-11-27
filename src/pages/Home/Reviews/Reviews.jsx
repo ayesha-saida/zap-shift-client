@@ -28,11 +28,16 @@ fetch('/reviews.json').then( res => res.json()).then(data => {
 
 <div>
 <Swiper
-loop={true}
+loop={reviews.length >= 3}
 effect={'coverflow'}
         grabCursor={true}
         centeredSlides={true}
         slidesPerView={3}
+          breakpoints={{
+    0: { slidesPerView: 1 },
+    768: { slidesPerView: 2 },
+    1024: { slidesPerView: 3 },
+  }}
         coverflowEffect={{
                     rotate: 30,
                     stretch: '50%',
