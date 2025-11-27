@@ -1,25 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import useAuth from '../../hooks/useAuth'
+import { AuthContext } from '../../contexts/AuthContext'
 
 const Register = () => {
     const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm()
 
-  const {registerUser, loginUser} = useAuth;
+  const {registerUser} = useContext(AuthContext);
 
   const handleRegister = (data) => {
 console.log('after register', data)
 
-registerUser(data.email, data.password)
-.then(result => {
+registerUser(data.email, data.password).then(result => {
   console.log(result.user)
-})
-.catch(error => {
+}).catch(error => {
   console.log(error)
 })
   }
@@ -46,7 +43,11 @@ registerUser(data.email, data.password)
  {errors.password?.type ==='minLength' && <span className='text-red-500'>Password must be 6 characters or longer</span>}
  {errors.password?.type ==='pattern' && <span className='text-red-500'>Password must have at least one uppercase, at least one lowercase, at least one number and at least one special characters.  </span>}
 
-  <button className="btn btn-neutral mt-4">Login</button>
+<div>
+  <a className='link link-hover'>Forgot password?</a>
+</div>
+
+  <button className="btn btn-neutral mt-4">Register</button>
 </fieldset>
           </form>
     </div>
