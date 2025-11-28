@@ -1,11 +1,13 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useContext } from 'react'
 import { FcGoogle } from 'react-icons/fc'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { AuthContext } from '../../contexts/AuthContext'
 
 const SocialLogin = () => {
     const {signInGoogle} = useContext(AuthContext)
+    const location = useLocation()
+  //  console.log('location in social', location)
     const navigate = useNavigate()
 
   const handleGoogleSignIn = () => {
@@ -13,7 +15,7 @@ const SocialLogin = () => {
       .then((result) => {
         console.log(result.user)
        alert("Successfully SignIn with Google");
-        navigate("/");
+        navigate(location.state || '/' );
       })
       .catch((error) => {
        console.log(error)

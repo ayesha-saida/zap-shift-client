@@ -1,20 +1,24 @@
 import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '../../contexts/AuthContext'
-import { Link, useNavigate} from 'react-router';
+import { Link, useLocation, useNavigate} from 'react-router';
 import SocialLogin from './SocialLogin';
 
 const Login = () => {
-const {logInUser} = useContext(AuthContext)
-const navigate = useNavigate()
+  const {logInUser} = useContext(AuthContext)
+  const navigate = useNavigate()
   const {register, handleSubmit, formState:{errors}} = useForm()
+  const location = useLocation()
+  console.log('In login page', location)
 
   const handleLogin = (data) => {
-    //console.log('form data', data)
-  logInUser(data.email, data.password).then(result => {
+    console.log('form data', data)
+
+  logInUser(data.email, data.password)
+  .then(result => {
   console.log(result.user)
   alert('login succesfull')
-  navigate('/')
+  navigate(location.state || '/')
 
 }).catch(error => {
   console.log(error)
@@ -51,7 +55,7 @@ const navigate = useNavigate()
  
   <SocialLogin></SocialLogin>
 
-  <p className='pt-2 text-center text-base-content'>Don't have an account? <Link to={'/register'} className='text-primary hover:underline  hover:text-blue-500'> Register </Link> </p>
+  <p className='pt-2 text-center text-base-content'>Don't have an account? <Link state={location.state} to={'/register'} className='text-primary hover:underline  hover:text-blue-500'> Register </Link> </p>
 </fieldset>
           </form>
      </div>

@@ -1,12 +1,15 @@
 import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { AuthContext } from '../../contexts/AuthContext'
-import { Link, useNavigate } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import SocialLogin from './SocialLogin'
 import axios from 'axios'
 
 const Register = () => {
   const navigate = useNavigate()
+  const location = useLocation()
+     console.log('In register page', location)
+
     const {
     register,
     handleSubmit,
@@ -41,12 +44,13 @@ registerUser(data.email, data.password).then(result => {
   updateUserProfile(userProfile)
   .then(() => {
     console.log('User Profile updated done')
+      navigate(location.state || '/')
   })
   .catch(error => console.log(error))
   })
 
   alert('Registration Successfull')
-  navigate('/')
+  //  navigate(location?.state || '/')
 
 }).catch(error => {
   console.log(error)
@@ -95,7 +99,7 @@ registerUser(data.email, data.password).then(result => {
 
   <button className="btn bg-primary mt-4">Register</button>
    <SocialLogin></SocialLogin>
-  <p className='pt-2 text-center text-base-content'>Already have an account? <Link to={'/login'} className='text-primary hover:underline hover:text-blue-500'> Login </Link> </p>
+  <p className='pt-2 text-center text-base-content'>Already have an account? <Link state={location.state} to={'/login'} className='text-primary hover:underline hover:text-blue-500'> Login </Link> </p>
 </fieldset>
           </form>
     </div>
