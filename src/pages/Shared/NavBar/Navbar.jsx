@@ -1,9 +1,22 @@
-import React from 'react'
+import { useContext } from 'react'
 import Logo from '../../../components/Logo/Logo'
-import { Link, NavLink } from 'react-router'
+import { Link, NavLink, useNavigate } from 'react-router'
 import { MdArrowOutward } from "react-icons/md";
+import { AuthContext } from '../../../contexts/AuthContext';
 
 const Navbar = () => {
+    const navigation = useNavigate()
+ const {user, logOut } = useContext(AuthContext);
+
+ const handleLogOut = () => {
+  logOut().then(() => {
+    alert('SignOut from Zap Shift')
+  })
+  .catch(error => {
+    console.log(error)
+  });
+ }
+
   const links = <>
       <li><NavLink>Services</NavLink></li>
       <li><NavLink to={'/coverage'}>Coverage</NavLink></li>
@@ -33,7 +46,9 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn">Button</a>
+ {
+  user ?  <a onClick={handleLogOut} className="btn">Sign Out</a> : <Link className='btn' to={'/login'}> Sign In </Link>
+ }
     <MdArrowOutward  />
   </div>
 </div>
