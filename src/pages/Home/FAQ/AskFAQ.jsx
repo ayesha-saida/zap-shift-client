@@ -19,29 +19,24 @@ const AskFAQ = ({ question, answer }) => {
 export default function FAQSection() {
   const faqData = [
     {
-      question: "How does this posture corrector work?",
-      answer:
-        "A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine. It encourages you to maintain proper posture throughout the day."
+      "question": "How are ride fares calculated?",
+      "answer": "Fares are based on distance, estimated travel time, current traffic, and any ongoing surge pricing."
     },
     {
-      question: "Is it suitable for all ages and body types?",
-      answer:
-        "Yes, it is designed to fit a wide range of body shapes and ages with adjustable straps."
+      "question": "Can I schedule a ride in advance?",
+      "answer": "Yes, you can schedule a ride by selecting the 'Schedule' option and choosing your desired time and date."
     },
     {
-      question: "Does it really help with back pain and posture improvement?",
-      answer:
-        "Regular use can help reduce strain and improve posture, which may relieve mild back discomfort."
+      "question": "What payment methods are accepted?",
+      "answer": "We accept cash, credit/debit cards, mobile wallets, and in-app balance depending on your region."
     },
     {
-      question: "Does it have smart features like vibration alerts?",
-      answer:
-        "Some models include smart sensors and vibration reminders, depending on the version."
+      "question": "How do I report an issue with a ride or delivery?",
+      "answer": "Go to 'Support' in the app, choose the relevant ride or delivery, and submit your complaint."
     },
     {
-      question: "How will I be notified when the product is back in stock?",
-      answer:
-        "You can sign up with your email or phone number to receive restock notifications."
+      "question": "What items are prohibited for delivery?",
+      "answer": "Hazardous materials, flammable items, illegal goods, and perishable food items are not allowed."
     }
   ];
 
