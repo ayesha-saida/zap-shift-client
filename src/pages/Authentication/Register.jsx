@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { AuthContext } from '../../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router'
 import SocialLogin from './SocialLogin'
+import axios from 'axios'
 
 const Register = () => {
   const navigate = useNavigate()
@@ -12,15 +13,41 @@ const Register = () => {
     formState: { errors },
   } = useForm()
 
-  const {registerUser} = useContext(AuthContext);
+  const {registerUser, updateUserProfile} = useContext(AuthContext);
 
   const handleRegister = (data) => {
 console.log('after register', data)
+const profileImg = data.photo[0]
 
 registerUser(data.email, data.password).then(result => {
   console.log(result.user)
+
+  //store the image in form data
+  const formData = new FormData()
+  formData.append('image', profileImg)
+
+   //send the photo to store and get the url
+  const img_API_URL = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_img_host_key}`
+  axios.post( img_API_URL , formData)
+  .then(res => {
+    console.log('after image upload', res.data.data.url)
+  
+    //update user profile in firebase
+    const userProfile = {
+      displayName: data.name,
+      photoURL: res.data.data.url,
+    }
+
+  updateUserProfile(userProfile)
+  .then(() => {
+    console.log('User Profile updated done')
+  })
+  .catch(error => console.log(error))
+  })
+
   alert('Registration Successfull')
   navigate('/')
+
 }).catch(error => {
   console.log(error)
 })
@@ -32,6 +59,8 @@ registerUser(data.email, data.password).then(result => {
          
  <form onSubmit={handleSubmit(handleRegister)} className='card-body'>
   <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+  
+    {/*name field */}
   <label className="label">Name</label>
   <input type="text" {...register('name' , { required: true , maxLength: 20, minLength:4 })} className="input" placeholder="Enter your Name" />
  
@@ -39,11 +68,20 @@ registerUser(data.email, data.password).then(result => {
  {errors.name?.type ==='minLength' && <span className='text-red-500'>Name must be 4 characters or longer</span>}
  {errors.name?.type ==='maxLength' && <span className='text-red-500'>Name must be in 20 characters</span>}
   
+    {/*photo image field */}
+  <label className="label">Photo</label> 
+  <input type="file" {...register('photo' , { required: true })} className="file-input" placeholder="Upload your profile picture" />
+ 
+ {errors.name?.type==='required' && <span className='text-red-500'>Photo is required</span>}
+
+  
+  {/*email field */}
   <label className="label">Email</label>
   <input type="email" {...register('email' , { required: true })} className="input" placeholder="Enter your Email" />
 
  {errors.email?.type==='required' && <span className='text-red-500'>Email is required</span>}
 
+  {/*password field */}
   <label className="label">Password</label>
   <input type="password" {...register('password', { 
     required: true,
