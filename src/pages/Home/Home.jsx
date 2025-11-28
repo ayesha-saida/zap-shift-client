@@ -6,7 +6,8 @@ import Brands from './Brands/Brands'
 import Reviews from './Reviews/Reviews'
 import Features from './Features/Features'
 import HeroBanner from './Features/heroBanner'
-import AskFAQ from './FAQ/AskFAQ'
+//import AskFAQ from './FAQ/AskFAQ'
+import FAQ from './FAQ/FAQ'
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
         <Features></Features>
       <HeroBanner></HeroBanner>
         <Reviews></Reviews>
+        <FAQ></FAQ>
       { /* <AskFAQ></AskFAQ> */}
     </div>
   )
