@@ -9,7 +9,7 @@ const Login = () => {
   const navigate = useNavigate()
   const {register, handleSubmit, formState:{errors}} = useForm()
   const location = useLocation()
-  console.log('In login page', location)
+  //console.log('In login page', location)
 
   const handleLogin = (data) => {
     console.log('form data', data)
