@@ -1,14 +1,22 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch, Watch } from 'react-hook-form'
 import { useLoaderData } from 'react-router'
 
 const SendParcel = () => {
- const { register, handleSubmit, formState: { errors } } = useForm()
+ const { register, handleSubmit, control, formState: { errors } } = useForm()
 
 const serviceCenters = useLoaderData()
 const regionsDuplicate = serviceCenters.map(c => c.region)
 const regions =[...new Set(regionsDuplicate)]
-console.log(regions)
+//console.log(regions)
+const senderRegion = useWatch({control,  name:'senderRegion'})
+const recieverRegion = useWatch({control,  name:'recieverRegion'})
+
+const districtsByRegion = region =>{
+    const regionDistricts = serviceCenters.filter(c => c.region === region)
+    const districts = regionDistricts.map(d => d.district)
+    return districts
+}
 
  const handleSendParcel = (data) => {
 console.log(data)
@@ -67,15 +75,24 @@ console.log(data)
           <label className="label">Sender Phone No.</label>
           <input type="number" {...register('senderNumber')} className="input w-full" placeholder="Phone Number" />
       
+       {/*sender reigon*/}
+          <label className="label">Sender Region</label>
+          <select  {...register('senderRegion')}className="select">
+                <option disabled={true}>Select your Region</option>
+                {
+                    regions.map((r,i) =>  <option key={i} value={r}>{r}</option>)
+                }
+       </select>
+
+
        {/*sender district*/}
-          <label className="label">Your District</label>
-          <select  {...register('senderDisctrict')}className="select">
+          <label className="label">Sender District</label>
+          <select  {...register('senderDistrict')}className="select">
                 <option disabled={true}>Select your District</option>
                 {
-                    regions.map(r =>  <option>{r}</option>)
+                   districtsByRegion(senderRegion).map((r,i) => 
+                     <option key={i} value={r}>{r}</option>)
                 }
-              
-  
        </select>
  </fieldset>    
  
@@ -100,12 +117,23 @@ console.log(data)
           <label className="label">Reciever  Phone No.</label>
           <input type="number" {...register('recieverNumber')} className="input w-full" placeholder="Phone Number" />
       
+       {/*reciever reigon*/}
+          <label className="label">Reciever Region</label>
+          <select  {...register('recieverRegion')}className="select">
+                <option disabled={true}>Select Reciever's Region</option>
+                {
+                    regions.map((r,i) =>  <option key={i} value={r}>{r}</option>)
+                }
+       </select>
+
+
        {/*reciever district*/}
-          <label className="label">Reciever  District</label>
-          <select  {...register('recieverDisctrict')}className="select w-full">
-                <option disabled={true}>Select Reciever  District</option>
-                            {
-                    regions.map(r =>  <option>{r}</option>)
+          <label className="label">Reciever District</label>
+          <select  {...register('recieverDistrict')}className="select">
+                <option disabled={true}>Select Reciever's District</option>
+                {
+                   districtsByRegion(recieverRegion).map((r,i) => 
+                     <option key={i} value={r}>{r}</option>)
                 }
        </select>
  </fieldset>   
