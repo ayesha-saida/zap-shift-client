@@ -127,7 +127,7 @@ const districtsByRegion = region =>{
        {/*sender reigon*/}
           <label className="label">Sender Region</label>
           <select  {...register('senderRegion')}className="select w-full">
-                <option disabled={true}>Select your Region</option>
+                <option disabled={false}>Select your Region</option>
                 {
                     regions.map((r,i) =>  <option key={i} value={r}>{r}</option>)
                 }
@@ -148,7 +148,7 @@ const districtsByRegion = region =>{
           <input type="text" {...register('senderAddress')} className="input w-full" placeholder="Address" />
  </fieldset>    
  
-
+ 
 {/*reciever info.*/}
  <fieldset className="fieldset">
     <h4 className='text-2xl font-semibold'> Reciever  Details</h4>
@@ -168,7 +168,7 @@ const districtsByRegion = region =>{
        {/*reciever reigon*/}
           <label className="label">Reciever Region</label>
           <select  {...register('recieverRegion')}className="select w-full">
-                <option disabled={true}>Select Reciever's Region</option>
+                <option disabled={false}>Select Reciever's Region</option>
                 {
                     regions.map((r,i) =>  <option key={i} value={r}>{r}</option>)
                 }
