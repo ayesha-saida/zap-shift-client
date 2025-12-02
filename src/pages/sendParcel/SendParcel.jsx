@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm, useWatch, Watch } from 'react-hook-form'
 import { useLoaderData } from 'react-router'
+import Swal from 'sweetalert2'
 
 const SendParcel = () => {
  const { register, handleSubmit, control, formState: { errors } } = useForm()
@@ -41,6 +42,24 @@ const districtsByRegion = region =>{
     }
   }
   console.log('cost', cost)
+
+  Swal.fire({
+  title: "Are you agree with our parcel pricing rate?",
+  text: `You will be charge ${cost}`,
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, I agree!"
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire({
+      title: "Thanks for Trusting us!",
+      text: "Our team will contact you soon to collect your parcel",
+      icon: "success"
+    });
+  }
+});
  }
   return (
     <div>
