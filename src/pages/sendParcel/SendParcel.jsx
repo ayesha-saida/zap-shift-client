@@ -19,7 +19,28 @@ const districtsByRegion = region =>{
 }
 
  const handleSendParcel = (data) => {
-console.log(data)
+    const isDocument = data.parcelType === 'document';
+    const isSameDistrict = data.senderDistrict === data.recieverDistrict
+// console.log(isSameDistrict)
+   const parcelWeight = parseFloat(data.parcelWeight)
+
+  let cost = 0
+  if(isDocument) {
+    cost = isSameDistrict ? 60 : 80;
+  } 
+  else {
+    if(parcelWeight < 3 ) {
+        cost = isSameDistrict ? 110 : 150;
+    }
+    else {
+      const minCharge = isSameDistrict ? 110 : 150;
+      const extraWeight = parcelWeight - 3;
+      const extraCharge = isSameDistrict ? extraWeight * 40 :
+                           extraWeight * 40 + 40;
+      cost = minCharge + extraCharge                    
+    }
+  }
+  console.log('cost', cost)
  }
   return (
     <div>
@@ -51,7 +72,6 @@ console.log(data)
         </fieldset>
 </div>
 
-
 {/*two column*/}
 <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>
 
@@ -77,7 +97,7 @@ console.log(data)
       
        {/*sender reigon*/}
           <label className="label">Sender Region</label>
-          <select  {...register('senderRegion')}className="select">
+          <select  {...register('senderRegion')}className="select w-full">
                 <option disabled={true}>Select your Region</option>
                 {
                     regions.map((r,i) =>  <option key={i} value={r}>{r}</option>)
@@ -87,7 +107,7 @@ console.log(data)
 
        {/*sender district*/}
           <label className="label">Sender District</label>
-          <select  {...register('senderDistrict')}className="select">
+          <select  {...register('senderDistrict')}className="select w-full">
                 <option disabled={true}>Select your District</option>
                 {
                    districtsByRegion(senderRegion).map((r,i) => 
@@ -119,7 +139,7 @@ console.log(data)
       
        {/*reciever reigon*/}
           <label className="label">Reciever Region</label>
-          <select  {...register('recieverRegion')}className="select">
+          <select  {...register('recieverRegion')}className="select w-full">
                 <option disabled={true}>Select Reciever's Region</option>
                 {
                     regions.map((r,i) =>  <option key={i} value={r}>{r}</option>)
@@ -129,7 +149,7 @@ console.log(data)
 
        {/*reciever district*/}
           <label className="label">Reciever District</label>
-          <select  {...register('recieverDistrict')}className="select">
+          <select  {...register('recieverDistrict')}className="select w-full">
                 <option disabled={true}>Select Reciever's District</option>
                 {
                    districtsByRegion(recieverRegion).map((r,i) => 
