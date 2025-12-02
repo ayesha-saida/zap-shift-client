@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm, useWatch, Watch } from 'react-hook-form'
 import { useLoaderData } from 'react-router'
 import Swal from 'sweetalert2'
+import useAxiosSecure from '../../components/useAxiosSecure'
+import { AuthContext } from '../../contexts/AuthContext'
 
 const SendParcel = () => {
- const { register, handleSubmit, control, formState: { errors } } = useForm()
+ const { register, handleSubmit, control, 
+    //formState: { errors } 
+    } = useForm()
+
+const {user} = useContext(AuthContext)
+
+const axiosInstance = useAxiosSecure()
 
 const serviceCenters = useLoaderData()
 const regionsDuplicate = serviceCenters.map(c => c.region)
@@ -20,9 +28,10 @@ const districtsByRegion = region =>{
 }
 
  const handleSendParcel = (data) => {
+   // console.log(data)
     const isDocument = data.parcelType === 'document';
     const isSameDistrict = data.senderDistrict === data.recieverDistrict
-// console.log(isSameDistrict)
+  //console.log(isSameDistrict)
    const parcelWeight = parseFloat(data.parcelWeight)
 
   let cost = 0
@@ -41,7 +50,7 @@ const districtsByRegion = region =>{
       cost = minCharge + extraCharge                    
     }
   }
-  console.log('cost', cost)
+  //console.log('cost', cost)
 
   Swal.fire({
   title: "Are you agree with our parcel pricing rate?",
@@ -53,11 +62,12 @@ const districtsByRegion = region =>{
   confirmButtonText: "Yes, I agree!"
 }).then((result) => {
   if (result.isConfirmed) {
-    Swal.fire({
-      title: "Thanks for Trusting us!",
-      text: "Our team will contact you soon to collect your parcel",
-      icon: "success"
-    });
+    //save the parcel info in to the db
+    axiosInstance.post('/parcels', data)
+    .then(result => {
+        console.log('After Sending Parcel', result.data)
+    })
+   
   }
 });
  }
@@ -100,15 +110,15 @@ const districtsByRegion = region =>{
 
     {/*sender name*/}
           <label className="label">Sender Name</label>
-          <input type="text" {...register('senderName')} className="input w-full" placeholder="Sender Name" />
+          <input type="text" {...register('senderName')}
+            defaultValue={user?.displayName}
+          className="input w-full" placeholder="Sender Name" />
     
     {/*sender Email*/}
           <label className="label">Sender Email</label>
-          <input type="text" {...register('senderEmail')} className="input w-full" placeholder="Sender Email" />
-      
-      {/*sender address*/}
-          <label className="label">Address</label>
-          <input type="text" {...register('senderAddress')} className="input w-full" placeholder="Address" />
+          <input type="text" {...register('senderEmail')}
+           defaultValue={user?.email}
+          className="input w-full" placeholder="Sender Email" />
        
        {/*sender phone number*/}
           <label className="label">Sender Phone No.</label>
@@ -123,7 +133,6 @@ const districtsByRegion = region =>{
                 }
        </select>
 
-
        {/*sender district*/}
           <label className="label">Sender District</label>
           <select  {...register('senderDistrict')}className="select w-full">
@@ -132,7 +141,11 @@ const districtsByRegion = region =>{
                    districtsByRegion(senderRegion).map((r,i) => 
                      <option key={i} value={r}>{r}</option>)
                 }
-       </select>
+       </select>  
+
+      {/*sender address*/}
+          <label className="label">Address</label>
+          <input type="text" {...register('senderAddress')} className="input w-full" placeholder="Address" />
  </fieldset>    
  
 
@@ -147,11 +160,7 @@ const districtsByRegion = region =>{
          {/*reciever Email*/}
           <label className="label">Reciever Email</label>
           <input type="text" {...register('recieverEmail')} className="input w-full" placeholder="Reciever Email" />
-
-      {/*reciever address*/}
-          <label className="label">Reciever Address</label>
-          <input type="text" {...register('recieverAddress')} className="input w-full" placeholder="Address" />
-       
+   
        {/*reciever phone number*/}
           <label className="label">Reciever  Phone No.</label>
           <input type="number" {...register('recieverNumber')} className="input w-full" placeholder="Phone Number" />
@@ -165,7 +174,6 @@ const districtsByRegion = region =>{
                 }
        </select>
 
-
        {/*reciever district*/}
           <label className="label">Reciever District</label>
           <select  {...register('recieverDistrict')}className="select w-full">
@@ -175,6 +183,10 @@ const districtsByRegion = region =>{
                      <option key={i} value={r}>{r}</option>)
                 }
        </select>
+       
+      {/*reciever address*/}
+          <label className="label">Reciever Address</label>
+          <input type="text" {...register('recieverAddress')} className="input w-full" placeholder="Address" />
  </fieldset>   
 
  </div>
