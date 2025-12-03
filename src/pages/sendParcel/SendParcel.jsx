@@ -50,7 +50,8 @@ const districtsByRegion = region =>{
       cost = minCharge + extraCharge                    
     }
   }
-  //console.log('cost', cost)
+   console.log('cost', cost)
+   data.cost = cost;
 
   Swal.fire({
   title: "Are you agree with our parcel pricing rate?",
