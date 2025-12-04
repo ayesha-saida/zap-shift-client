@@ -6,7 +6,7 @@ import { FaEdit } from 'react-icons/fa'
 import { MdDeleteForever } from 'react-icons/md'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import Swal from 'sweetalert2'
-import { Link } from 'react-router'
+//import { Link } from 'react-router'
 
 const MyParcels = () => {
    const {user} = useContext(AuthContext)
@@ -15,7 +15,7 @@ const MyParcels = () => {
    const { data: parcels = [], refetch } = useQuery({
     queryKey: ['my-parcels', user?.email],
     queryFn: async() => {
-           const res = await axiosInstance.get(`/parcels?.email=${user.email}`)
+           const res = await axiosInstance.get(`/parcels?email=${user.email}`)
            return res.data;
     }
    })
@@ -54,6 +54,30 @@ const MyParcels = () => {
 
  }
 
+const handlePayment = async(parcel) => {
+   
+  //  Validate parcel data
+  if (!parcel.cost || isNaN(parcel.cost) || parcel.cost <= 0) {
+   alert('Parcel cost is invalid. Cannot proceed to payment.');
+        return;
+    }
+     
+  if (!parcel.senderEmail) {
+    alert('Parcel sender email is missing.');
+    return;
+  }
+
+    const paymentInfo = {
+            cost:  Number(parcel.cost),
+            parcelId: parcel._id,
+            senderEmail: parcel.senderEmail,
+            parcelName: parcel.parcelName
+      }
+         const res = await axiosInstance.post('/payment-checkout-session', paymentInfo)
+          console.log(res.data)
+      window.location.href = res.data.url
+}
+
   return (
     <div> 
       <h2>All of My Parcels: {parcels.length}</h2> 
@@ -82,7 +106,7 @@ const MyParcels = () => {
         <td>
           {
           parcel.paymentStatus === 'paid' ? <span className='text-green-500'> Paid </span>
-           : <Link to={`/dashboard/payment/${parcel._id}`}> <button className='btn btn-sm btn-primary text-black'> Pay </button>   </Link>
+           :  <button onClick={ () =>  handlePayment(parcel) } className='btn btn-sm btn-primary text-black'> Pay </button> 
           }
         </td> 
 
