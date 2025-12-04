@@ -6,6 +6,7 @@ import { FaEdit } from 'react-icons/fa'
 import { MdDeleteForever } from 'react-icons/md'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import Swal from 'sweetalert2'
+import { Link } from 'react-router'
 
 const MyParcels = () => {
    const {user} = useContext(AuthContext)
@@ -65,7 +66,8 @@ const MyParcels = () => {
         <th></th>
         <th>Name</th>
         <th>Cost</th>
-        <th>Payment Status</th>
+        <th>Payment</th>
+        <th>Delivery Status</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -74,9 +76,17 @@ const MyParcels = () => {
             parcels.map((parcel, index) => 
          <tr key={parcel._id}>
         <th>{index + 1}</th>
-        <td>{parcel.parcelName}</td>
-        <td>{parcel.senderName}</td>        
-        <td>{parcel.cost}</td>       
+        <td>{parcel.parcelName}</td>       
+        <td>{parcel.cost}</td> 
+              
+        <td>
+          {
+          parcel.paymentStatus === 'paid' ? <span className='text-green-500'> Paid </span>
+           : <Link to={`/dashboard/payment/${parcel._id}`}> <button className='btn btn-sm btn-primary text-black'> Pay </button>   </Link>
+          }
+        </td> 
+
+        <td>{parcel.deliveryStatus}</td>              
         <td className='flex'>
           <button className='btn btn-square hover:bg-primary'>
               <FaMagnifyingGlass />
