@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useForm, useWatch, Watch } from 'react-hook-form'
-import { useLoaderData } from 'react-router'
+import { useLoaderData, useNavigate } from 'react-router'
 import Swal from 'sweetalert2'
 import useAxiosSecure from '../../components/useAxiosSecure'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -13,6 +13,8 @@ const SendParcel = () => {
 const {user} = useContext(AuthContext)
 
 const axiosInstance = useAxiosSecure()
+
+const navigate = useNavigate()
 
 const serviceCenters = useLoaderData()
 const regionsDuplicate = serviceCenters.map(c => c.region)
@@ -50,23 +52,35 @@ const districtsByRegion = region =>{
       cost = minCharge + extraCharge                    
     }
   }
-   console.log('cost', cost)
+    // console.log('cost', cost)
    data.cost = cost;
 
   Swal.fire({
   title: "Are you agree with our parcel pricing rate?",
-  text: `You will be charge ${cost}`,
+  text: `You will be charge ${cost} Tk.`,
   icon: "warning",
   showCancelButton: true,
   confirmButtonColor: "#3085d6",
   cancelButtonColor: "#d33",
-  confirmButtonText: "Yes, I agree!"
+  confirmButtonText: "Confirm and Continue Payment!"
 }).then((result) => {
   if (result.isConfirmed) {
-    //save the parcel info in to the db
+    //save the parcel info. in to the db
     axiosInstance.post('/parcels', data)
-    .then(result => {
-        console.log('After Sending Parcel', result.data)
+    .then(res => {
+        console.log('After Sending Parcel', res.data)
+
+        if(res.data.insertedId) {
+          navigate('/dashboard/my-parcels')
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Parcel request has created. Please Pay',
+            showConfirmButton: false,
+            timer: 2500
+          })
+
+        }
     })
    
   }
