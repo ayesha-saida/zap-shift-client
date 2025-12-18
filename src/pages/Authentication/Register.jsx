@@ -4,6 +4,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 import { Link, useLocation, useNavigate } from 'react-router'
 import SocialLogin from './SocialLogin'
 import axios from 'axios'
+import useAxiosSecure from '../../components/useAxiosSecure'
 
 const Register = () => {
   const navigate = useNavigate()
@@ -18,12 +19,14 @@ const Register = () => {
 
   const {registerUser, updateUserProfile} = useContext(AuthContext);
 
-  const handleRegister = (data) => {
-console.log('after register', data)
-const profileImg = data.photo[0]
+  const axiosSecure = useAxiosSecure()
 
-registerUser(data.email, data.password).then(result => {
-  console.log(result.user)
+  const handleRegister = (data) => {
+   console.log('after register', data)
+  const profileImg = data.photo[0]
+
+registerUser(data.email, data.password).then( () => {
+  //console.log(result.user)
 
   //store the image in form data
   const formData = new FormData()
@@ -32,13 +35,28 @@ registerUser(data.email, data.password).then(result => {
    //send the photo to store and get the url
   const img_API_URL = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_img_host_key}`
   axios.post( img_API_URL , formData)
+
   .then(res => {
-    console.log('after image upload', res.data.data.url)
+       const photoURL = res.data.data.url; 
+    //console.log('after image upload', photoURL)
   
+   // create user in the database
+   const userInfo = {
+    email: data.email,
+    displayName: data.name ,
+    photoURL: photoURL
+   }
+    axiosSecure.post('/users', userInfo)
+   .then( res => {
+      if(res.data.insertedId){
+        console.log('user created in the dataset.')
+      }
+   })
+
     //update user profile in firebase
     const userProfile = {
       displayName: data.name,
-      photoURL: res.data.data.url,
+      photoURL: photoURL,
     }
 
   updateUserProfile(userProfile)
