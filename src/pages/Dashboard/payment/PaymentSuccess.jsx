@@ -22,7 +22,7 @@ const PaymentSuccess = () => {
 
           })
     }
-  }, [sessionId])
+  }, [sessionId,axiosInstance])
 
   return (
     <div>
