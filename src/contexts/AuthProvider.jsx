@@ -34,6 +34,9 @@ const AuthProvider = ({children}) => {
        //update user's profile including img
  const updateUserProfile = (profile) => {
   return updateProfile(auth.currentUser, profile)
+
+   // refresh user state
+  setUser({ ...auth.currentUser })
  }
         
  // observe user state 
