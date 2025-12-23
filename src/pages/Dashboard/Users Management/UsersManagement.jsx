@@ -44,6 +44,31 @@ const UsersManagement = () => {
             })
     }
 
+     const handleRemoveAdmin = user => {
+        const roleInfo = { role: 'user' }
+        axiosSecure.patch(`/users/${user._id}`, roleInfo)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                     Swal.fire({
+                     title: "Are you sure?",
+                     text: `You want to remove ${user.displayName} from admin`,
+                     icon: "warning",
+                     showCancelButton: true,
+                     confirmButtonColor: "#3085d6",
+                     cancelButtonColor: "#d33",
+                     confirmButtonText: "Yes"
+                         }).then((result) => {
+                      if (result.isConfirmed) {
+                       Swal.fire({
+                    title: 'Removed',
+                    icon: "success"
+                             });
+                        }
+                  });
+                }
+            })
+    }
    
 
   return (
@@ -91,7 +116,8 @@ const UsersManagement = () => {
                             </td>
                             <td>
                                 {user.role === 'admin' ?
-                                    <button                           
+                                    <button  
+                                    onClick={() => handleRemoveAdmin(user)}                            
                                         className='btn bg-red-300'>
                                         <FiShieldOff />
                                     </button> :
