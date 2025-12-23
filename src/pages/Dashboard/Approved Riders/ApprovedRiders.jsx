@@ -1,7 +1,7 @@
 import React from 'react'
 import useAxiosSecure from '../../../components/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import { FaTrashCan } from 'react-icons/fa6';
+import { FaEye, FaTrashCan } from 'react-icons/fa6';
 import { IoPersonRemoveSharp } from 'react-icons/io5';
 import { FaUserCheck } from 'react-icons/fa';
 import Swal from 'sweetalert2';
@@ -74,6 +74,10 @@ const ApprovedRiders = () => {
                                     <p className={`${rider.status === 'approved' ? 'text-green-800' : 'text-red-500'}`}>{rider.status}</p>
                                 </td>
                                 <td>
+                                    <button
+                                         className='btn'>
+                                         <FaEye> </FaEye>
+                                    </button>
                                     <button
                                         onClick={() => handleApproval(rider)} className='btn'>
                                         <FaUserCheck />
