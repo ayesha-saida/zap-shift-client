@@ -18,23 +18,33 @@ const UsersManagement = () => {
 
       const handleMakeAdmin = user => {
         const roleInfo = { role: 'admin' }
-        //TODO: must ask for confirmation before proceed
         axiosSecure.patch(`/users/${user._id}`, roleInfo)
             .then(res => {
                 console.log(res.data);
                 if (res.data.modifiedCount) {
                     refetch();
                     Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: `${user.displayName} marked as an Admin`,
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
+                     title: "Are you sure?",
+                     text: `You want to make ${user.displayName} an admin`,
+                     icon: "warning",
+                     showCancelButton: true,
+                     confirmButtonColor: "#3085d6",
+                     cancelButtonColor: "#d33",
+                     confirmButtonText: "Yes"
+                         }).then((result) => {
+                      if (result.isConfirmed) {
+                       Swal.fire({
+                    title: `${user.displayName} marked as an Admin`,
+                    icon: "success"
+                             });
+                        }
+                  });
                 }
+
             })
     }
-    
+
+   
 
   return (
     <div>
@@ -81,7 +91,7 @@ const UsersManagement = () => {
                             </td>
                             <td>
                                 {user.role === 'admin' ?
-                                    <button                              
+                                    <button                           
                                         className='btn bg-red-300'>
                                         <FiShieldOff />
                                     </button> :
