@@ -3,17 +3,39 @@ import useAxiosSecure from '../../../components/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { FiShieldOff } from 'react-icons/fi';
 import { FaUserShield } from 'react-icons/fa6';
+import Swal from 'sweetalert2';
 
 const UsersManagement = () => {
        const axiosSecure = useAxiosSecure();
     
-    const { data: users = [] } = useQuery({
+    const { refetch, data: users = [] } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users`);
             return res.data;
         }
     })
+
+      const handleMakeAdmin = user => {
+        const roleInfo = { role: 'admin' }
+        //TODO: must ask for confirmation before proceed
+        axiosSecure.patch(`/users/${user._id}`, roleInfo)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `${user.displayName} marked as an Admin`,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+    }
+    
+
   return (
     <div>
         <h2 className='text-4xl'>Manage Users: {users.length} </h2>
@@ -33,7 +55,7 @@ const UsersManagement = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, index) => <tr>
+                        {users.map((user, index) => <tr key={user._id}>
                             <td>
                                 {index + 1}
                             </td>
@@ -64,6 +86,7 @@ const UsersManagement = () => {
                                         <FiShieldOff />
                                     </button> :
                                     <button
+                                     onClick={() => handleMakeAdmin(user)}
                                     className='btn bg-green-400'>
                                         <FaUserShield></FaUserShield>
                                     </button>
