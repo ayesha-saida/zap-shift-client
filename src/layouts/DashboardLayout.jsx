@@ -4,8 +4,11 @@ import { FaMotorcycle } from 'react-icons/fa'
 import { FaUsers } from 'react-icons/fa6'
 import { MdHistory } from 'react-icons/md'
 import { Link, NavLink, Outlet } from 'react-router'
+import useRole from '../components/useRole'
 
 const DashboardLayout = () => {
+  const role = useRole()
+
   return (
 <div className="drawer lg:drawer-open max-w-7xl mx-auto">
   <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -55,7 +58,10 @@ const DashboardLayout = () => {
              <span className="is-drawer-close:hidden">Payment History</span>
              </NavLink>
           </li>
-
+       
+        {
+            role === 'admin' && <>
+            
           <li>
             <NavLink to={'/dashboard/approve-riders'}  className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Riders"> 
             <FaMotorcycle />
@@ -69,6 +75,9 @@ const DashboardLayout = () => {
              <span className="is-drawer-close:hidden">Users Management</span>
              </NavLink>
           </li>
+            
+            </>
+          }
 
         {/* List item */}
         <li>
