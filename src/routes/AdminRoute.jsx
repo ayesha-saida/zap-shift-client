@@ -2,13 +2,14 @@ import React, { useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import useRole from '../components/useRole'
 import Forbidden from '../components/Forbidden'
+import Loading from '../components/Loading'
 
 const AdminRoute = ({children}) => {
     const {user, loading} = useContext(AuthContext)
     const {role, roleLoading} = useRole()
 
     if(loading || roleLoading) {
-        return <span className="loading loading-dots loading-xl"></span>
+        return <Loading />  
     }
 
     if(role !== 'admin') {

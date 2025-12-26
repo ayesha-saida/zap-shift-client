@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { useParams } from 'react-router'
 import useAxiosSecure from '../../../components/useAxiosSecure'
+import Loading from '../../../components/Loading'
 
 const Payment = () => {
     const {parcelId} = useParams()
@@ -30,7 +31,7 @@ const Payment = () => {
 
      if(isLoading) {
       return <div>
-        <span className="loading loading-dots loading-xl"></span>
+        <Loading /> 
         </div>
     }
     
