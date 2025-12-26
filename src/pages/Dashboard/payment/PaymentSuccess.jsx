@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
-import useAxiosSecure from '../../../components/useAxiosSecure'
+import useAxiosSecure from '../../../components/Hooks/useAxiosSecure'
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams()

@@ -86,8 +86,8 @@ export const router = createBrowserRouter([
         Component: PaymentHistory,
       },
       {
-        path:'approve-riders',
-        Component: ApprovedRiders,
+        path:'approve-riders', 
+        element: <AdminRoute> <ApprovedRiders /> </AdminRoute> ,
       },
       {
         path:'users-management',

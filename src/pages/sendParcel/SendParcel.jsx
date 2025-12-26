@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useForm, useWatch, Watch } from 'react-hook-form'
 import { useLoaderData, useNavigate } from 'react-router'
 import Swal from 'sweetalert2'
-import useAxiosSecure from '../../components/useAxiosSecure'
+import useAxiosSecure from '../../components/Hooks/useAxiosSecure'
 import { AuthContext } from '../../contexts/AuthContext'
 
 const SendParcel = () => {

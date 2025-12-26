@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { AuthContext } from '../../contexts/AuthContext'
-import useAxiosSecure from '../../components/useAxiosSecure'
+import useAxiosSecure from '../../components/Hooks/useAxiosSecure'
 import { useLoaderData } from 'react-router'
 import Swal from 'sweetalert2'
 
@@ -112,7 +112,7 @@ const riderRegion = useWatch({control,  name:'riderRegion'})
                     </fieldset>
 
  </div>
-<input type='submit' value='Send Parcel' className='btn btn-primary text-black' />
+<input type='submit' value='Submit' className='btn btn-primary text-black' />
     </form>
     </div>
   )

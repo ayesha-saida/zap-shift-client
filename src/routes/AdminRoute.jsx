@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
-import useRole from '../components/useRole'
+import useRole from '../components/Hooks/useRole'
 import Forbidden from '../components/Forbidden'
 import Loading from '../components/Loading'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import useAxiosSecure from '../../../components/useAxiosSecure';
+import useAxiosSecure from '../../../components/Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { FiShieldOff } from 'react-icons/fi';
 import { FaUserShield } from 'react-icons/fa6';
@@ -18,7 +18,7 @@ const UsersManagement = () => {
 
       const handleMakeAdmin = user => {
         const roleInfo = { role: 'admin' }
-        axiosSecure.patch(`/users/${user._id}`, roleInfo)
+        axiosSecure.patch(`/users/${user._id}/role`, roleInfo)
             .then(res => {
                 console.log(res.data);
                 if (res.data.modifiedCount) {
@@ -46,7 +46,7 @@ const UsersManagement = () => {
 
      const handleRemoveAdmin = user => {
         const roleInfo = { role: 'user' }
-        axiosSecure.patch(`/users/${user._id}`, roleInfo)
+        axiosSecure.patch(`/users/${user._id}/role`, roleInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
                     refetch();

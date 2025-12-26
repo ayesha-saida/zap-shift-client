@@ -1,5 +1,5 @@
 import React from 'react'
-import useAxiosSecure from '../../../components/useAxiosSecure';
+import useAxiosSecure from '../../../components/Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { FaEye, FaTrashCan } from 'react-icons/fa6';
 import { IoPersonRemoveSharp } from 'react-icons/io5';
@@ -64,7 +64,7 @@ const ApprovedRiders = () => {
                         </thead>
                         <tbody>
                         {
-                            riders.map((rider, index) => <tr> 
+                            riders.map((rider, index) => <tr key={rider._id}> 
                                 <th>{index + 1}</th>
                                 <td>{rider.riderName}</td>
                                 <td>{rider.riderEmail}</td>

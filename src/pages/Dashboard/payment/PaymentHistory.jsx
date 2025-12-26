@@ -1,7 +1,7 @@
 import React from 'react'
 import { useContext } from 'react'
 import { AuthContext } from '../../../contexts/AuthContext'
-import useAxiosSecure from '../../../components/useAxiosSecure'
+import useAxiosSecure from '../../../components/Hooks/useAxiosSecure'
 import { useQuery } from '@tanstack/react-query'
 
 const PaymentHistory = () => {

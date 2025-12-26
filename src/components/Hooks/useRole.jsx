@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { AuthContext } from '../contexts/AuthContext';
-import useAxiosSecure from './useAxiosSecure';
+import { AuthContext } from '../../contexts/AuthContext';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
 const useRole = () => {
@@ -11,8 +11,8 @@ const useRole = () => {
         queryKey: ['user-role', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users/${user.email}/role`);
-            
-            return res.data ;
+           
+            return res.data?.role || 'user' ;
         }
     })
 

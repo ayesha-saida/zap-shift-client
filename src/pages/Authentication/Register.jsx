@@ -4,7 +4,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 import { Link, useLocation, useNavigate } from 'react-router'
 import SocialLogin from './SocialLogin'
 import axios from 'axios'
-import useAxiosSecure from '../../components/useAxiosSecure'
+import useAxiosSecure from '../../components/Hooks/useAxiosSecure'
 
 const Register = () => {
   const navigate = useNavigate()

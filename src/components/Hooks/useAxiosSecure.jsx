@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect } from 'react'
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router';
 
 const axiosInstance = axios.create({
@@ -19,7 +19,7 @@ const useAxiosSecure = () => {
     })
 
     // interceptor response
-  const resInterceptor =  axiosInstance.interceptors.request.use((response) => {
+  const resInterceptor =  axiosInstance.interceptors.response.use((response) => {
     return response;
   }, (error) => {
        console.log(error)
@@ -37,7 +37,7 @@ const useAxiosSecure = () => {
 
     return () => {
        axiosInstance.interceptors.request.eject(reqInterceptor)
-       axiosInstance.interceptors.request.eject(reqInterceptor)
+       axiosInstance.interceptors.response.eject(resInterceptor)
        
       }
   }, [user, logOut,navigate])

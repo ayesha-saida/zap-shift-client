@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { useLocation, useNavigate } from 'react-router'
 import { AuthContext } from '../../contexts/AuthContext'
-import useAxiosSecure from '../../components/useAxiosSecure'
+import useAxiosSecure from '../../components/Hooks/useAxiosSecure'
 
 const SocialLogin = () => {
     const {signInGoogle} = useContext(AuthContext)

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { useParams } from 'react-router'
-import useAxiosSecure from '../../../components/useAxiosSecure'
+import useAxiosSecure from '../../../components/Hooks/useAxiosSecure'
 import Loading from '../../../components/Loading'
 
 const Payment = () => {

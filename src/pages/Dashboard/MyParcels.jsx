@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
-import useAxiosSecure from '../../components/useAxiosSecure'
+import useAxiosSecure from '../../components/Hooks/useAxiosSecure'
 import { FaEdit } from 'react-icons/fa'
 import { MdDeleteForever } from 'react-icons/md'
 import { FaMagnifyingGlass } from 'react-icons/fa6'

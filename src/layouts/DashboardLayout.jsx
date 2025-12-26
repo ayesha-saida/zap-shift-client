@@ -4,10 +4,10 @@ import { FaMotorcycle } from 'react-icons/fa'
 import { FaUsers } from 'react-icons/fa6'
 import { MdHistory } from 'react-icons/md'
 import { Link, NavLink, Outlet } from 'react-router'
-import useRole from '../components/useRole'
+import useRole from '../components/Hooks/useRole'
 
 const DashboardLayout = () => {
-  const role = useRole()
+  const {role} = useRole()
 
   return (
 <div className="drawer lg:drawer-open max-w-7xl mx-auto">
