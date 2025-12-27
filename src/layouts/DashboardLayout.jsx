@@ -1,6 +1,6 @@
 import React from 'react'
 import { CiDeliveryTruck } from 'react-icons/ci'
-import { FaMotorcycle } from 'react-icons/fa'
+import { FaMotorcycle, FaTasks } from 'react-icons/fa'
 import { FaUsers } from 'react-icons/fa6'
 import { MdHistory } from 'react-icons/md'
 import { Link, NavLink, Outlet } from 'react-router'
@@ -60,7 +60,21 @@ const DashboardLayout = () => {
              </NavLink>
           </li>
        
-        {
+              { /*riders route links */ }
+       {
+           role === 'rider' && <>
+            
+          <li>
+            <NavLink to={'/dashboard/assigned-task'}  className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assigned Task"> 
+            <FaTasks />
+             <span className="is-drawer-close:hidden">Assigned Task</span>
+             </NavLink>
+          </li>
+              </>
+       }
+
+              {/* Admin only routes */}
+        { 
             role === 'admin' && <>
             
           <li>
