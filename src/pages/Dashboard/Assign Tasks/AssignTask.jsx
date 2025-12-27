@@ -22,6 +22,7 @@ const AssignTask = () => {
             riderId: parcel.riderId,
             trackingId: parcel.trackingId
         }
+          let message = `Parcel Status is updated with ${status.split('_').join(' ')}`
 
         axiosSecure.patch(`/parcels/${parcel._id}/status`, statusInfo)
             .then(res => {
@@ -30,7 +31,7 @@ const AssignTask = () => {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: 'Thank you for accepting',
+                        title: message,
                         showConfirmButton: false,
                         timer: 1500
                     });
@@ -71,12 +72,18 @@ const AssignTask = () => {
 
                             </td>
                             <td>
+                              {   parcel.deliveryStatus === 'rider_arriving' ? <> 
                                 <button
-                              
+                                  onClick={() => handleDeliveryStatusUpdate(parcel, 'parcel_picked_up')}
                                     className='btn btn-primary text-black'>Mark as Picked Up</button>
+
+                                 </>  : ''   ||   parcel.deliveryStatus === 'parcel_picked_up' ? <> 
+                               
                                 <button
-                                   
+                                    onClick={() => handleDeliveryStatusUpdate(parcel, 'parcel_delivered')}
                                     className='btn btn-primary text-black mx-2'>Mark as Delivered</button>
+                                   </>   :    '' }
+                                 
                             </td>
                         </tr>)}
 
