@@ -6,6 +6,7 @@ import { MdHistory } from 'react-icons/md'
 import { Link, NavLink, Outlet } from 'react-router'
 import useRole from '../components/Hooks/useRole'
 import { RiEBikeFill } from 'react-icons/ri'
+import { SiGoogletasks } from 'react-icons/si'
 
 const DashboardLayout = () => {
   const {role} = useRole()
@@ -70,6 +71,14 @@ const DashboardLayout = () => {
              <span className="is-drawer-close:hidden">Assigned Task</span>
              </NavLink>
           </li>
+
+          <li>
+            <NavLink to={'/dashboard/completed-deliveries'}  className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Completed Deliveries"> 
+            <SiGoogletasks />
+             <span className="is-drawer-close:hidden">Completed Deliveries</span>
+             </NavLink>
+          </li>
+
               </>
        }
 
