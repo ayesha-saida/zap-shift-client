@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../../../contexts/AuthContext';
 import useAxiosSecure from '../../../components/Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
 
 const AssignTask = () => {
       const { user } = useContext(AuthContext);
@@ -14,6 +15,28 @@ const AssignTask = () => {
             return res.data;
         }
     })
+
+     const handleDeliveryStatusUpdate = (parcel, status) => {
+        const statusInfo = { 
+            deliveryStatus: status, 
+            riderId: parcel.riderId,
+            trackingId: parcel.trackingId
+        }
+
+        axiosSecure.patch(`/parcels/${parcel._id}/status`, statusInfo)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: 'Thank you for accepting',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+    }
 
   return (
     <div>
@@ -39,7 +62,7 @@ const AssignTask = () => {
                                     parcel.deliveryStatus === 'driver_assigned'
                                         ? <>
                                             <button
-                                               
+                                                  onClick={() => handleDeliveryStatusUpdate(parcel, 'rider_arriving')}
                                                 className='btn btn-primary text-black'>Accept</button>
                                             <button className='btn btn-warning text-black ms-2'>Reject</button>
                                         </>
