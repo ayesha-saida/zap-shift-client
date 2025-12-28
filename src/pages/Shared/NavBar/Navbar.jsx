@@ -1,11 +1,10 @@
 import { useContext } from 'react'
 import Logo from '../../../components/Logo/Logo'
-import { Link, NavLink, useNavigate } from 'react-router'
+import { Link, NavLink} from 'react-router'
 import { MdArrowOutward } from "react-icons/md";
 import { AuthContext } from '../../../contexts/AuthContext';
 
 const Navbar = () => {
-    const navigation = useNavigate()
  const {user, logOut } = useContext(AuthContext);
 
  const handleLogOut = () => {
@@ -27,6 +26,8 @@ const Navbar = () => {
     {
       user && <>
             <li><NavLink to={'/dashboard/my-parcels'}> My Parcel</NavLink></li>
+
+            <li><NavLink to={'/dashboard'}> Dashboard </NavLink></li>
       </>
     }
 

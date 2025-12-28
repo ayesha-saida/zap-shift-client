@@ -75,7 +75,8 @@ const handlePayment = async(parcel) => {
             trackingId: parcel.trackingId
       }
          const res = await axiosInstance.post('/payment-checkout-session', paymentInfo)
-          console.log(res.data)
+        
+        // console.log(res.data)
       window.location.href = res.data.url
 }
 

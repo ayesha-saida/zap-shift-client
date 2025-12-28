@@ -72,7 +72,12 @@ registerUser(data.email, data.password).then( () => {
   })
 
     })   
+
+   .catch(error => {
+    console.log(error)
+  })
         })
+  
 
   }
 
