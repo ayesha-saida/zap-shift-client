@@ -33,8 +33,8 @@ registerUser(data.email, data.password).then( () => {
   formData.append('image', profileImg)
 
    //send the photo to store and get the url
-  const img_API_URL = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_img_host_key}`
-  axios.post( img_API_URL , formData)
+  const img_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_host_key}`
+  return axios.post( img_API_URL , formData)
 
   .then(res => {
        const photoURL = res.data.data.url; 
@@ -46,7 +46,7 @@ registerUser(data.email, data.password).then( () => {
     displayName: data.name ,
     photoURL: photoURL
    }
-    axiosSecure.post('/users', userInfo)
+   return axiosSecure.post('/users', userInfo)
    .then( res => {
       if(res.data.insertedId){
         console.log('user created in the dataset.')
@@ -54,26 +54,26 @@ registerUser(data.email, data.password).then( () => {
    })
 
     //update user profile in firebase
-    const userProfile = {
+      .then(() => {
+   return  updateUserProfile ( {
       displayName: data.name,
       photoURL: photoURL,
-    }
-
-  updateUserProfile(userProfile)
+         })
+     })
+ 
   .then(() => {
     console.log('User Profile updated done')
+    alert('Registration Successfull')
       navigate(location.state || '/')
   })
-  .catch(error => console.log(error))
+  .catch(error => {
+    alert(error)
+    console.log(error)
   })
 
-  alert('Registration Successfull')
-  //  navigate(location?.state || '/')
+    })   
+        })
 
-}).catch(error => {
-  alert(error)
-  console.log(error)
-})
   }
 
   return (
@@ -95,7 +95,9 @@ registerUser(data.email, data.password).then( () => {
   <label className="label">Photo</label> 
   <input type="file" {...register('photo' , { required: true })} className="file-input" placeholder="Upload your profile picture" />
  
- {errors.name?.type==='required' && <span className='text-red-500'>Photo is required</span>}
+ {errors.name?.type==='required' &&   (
+  <span>Photo is required</span>
+    )}
 
   
   {/*email field */}

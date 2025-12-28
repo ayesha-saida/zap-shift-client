@@ -15,13 +15,14 @@ const Coverage = () => {
     const district = serviceCenters.find( (c) => c.district.toLowerCase().includes(location.toLowerCase()));
     if(district){
     const coordinate = [district.latitude, district.longitude]
-  console.log(district, coordinate)
+  // console.log(district, coordinate)
+  
   //go to the location
   mapRef.current.flyTo(coordinate, 14)
   }
   }
   return (
-    <div>
+    <div className='p-8'>
       <h1 className='text-5xl'>We are available in 64 districts</h1>
    
    <div>
@@ -47,8 +48,8 @@ const Coverage = () => {
 
    <div className='border w-full h-[800px]'>
     {/*visual map */}
-<MapContainer center={position} zoom={13} scrollWheelZoom={false} className='h-[800px]' ref={mapRef
-}> 
+    <MapContainer center={position} zoom={13} scrollWheelZoom={false}
+     className='h-[800px]'  ref={mapRef}> 
    <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
