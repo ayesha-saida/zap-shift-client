@@ -71,7 +71,8 @@ const handlePayment = async(parcel) => {
             cost:  Number(parcel.cost),
             parcelId: parcel._id,
             senderEmail: parcel.senderEmail,
-            parcelName: parcel.parcelName
+            parcelName: parcel.parcelName,
+            trackingId: parcel.trackingId
       }
          const res = await axiosInstance.post('/payment-checkout-session', paymentInfo)
           console.log(res.data)

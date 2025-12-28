@@ -78,10 +78,10 @@ export const router = createBrowserRouter([
         path:'my-parcels',
         Component: MyParcels  ,
       },
-      {
+    /*  {
         path:'payment/:parcelId',
         Component: Payment ,
-      },
+      }, */
       {
         path:'payment-success',
         Component: PaymentSuccess  ,
