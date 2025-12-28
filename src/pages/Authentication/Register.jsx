@@ -71,6 +71,7 @@ registerUser(data.email, data.password).then( () => {
   //  navigate(location?.state || '/')
 
 }).catch(error => {
+  alert(error)
   console.log(error)
 })
   }

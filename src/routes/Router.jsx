@@ -21,6 +21,7 @@ import AssignRiders from "../pages/Dashboard/Assign Riders/AssignRiders";
 import AssignTask from "../pages/Dashboard/Assign Tasks/AssignTask";
 import RidersRoute from "./RidersRoute";
 import CompletedDeliveries from "../pages/Dashboard/Completed Deliveries/CompletedDeliveries";
+import ParcelTrack from "../pages/Parcel Track/ParcelTrack";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       path:'send-parcel',
     element: <PrivateRoute>  <SendParcel />  </PrivateRoute> ,
      loader: () => fetch('/serviceCenters.json').then(res => res.json())
+    },
+   {
+      path:'parcel-track/:trackingId',
+    element: <ParcelTrack /> ,
     },
 ]
   },

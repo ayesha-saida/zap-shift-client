@@ -6,7 +6,7 @@ import { FaEdit } from 'react-icons/fa'
 import { MdDeleteForever } from 'react-icons/md'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import Swal from 'sweetalert2'
-//import { Link } from 'react-router'
+import { Link } from 'react-router'
 
 const MyParcels = () => {
    const {user} = useContext(AuthContext)
@@ -111,7 +111,8 @@ const handlePayment = async(parcel) => {
           }
         </td> 
 
-        <td>{parcel.trackingId}</td>              
+        <td> 
+          <Link to={`/parcel-track/${parcel.trackingId}`}> {parcel.trackingId}  </Link> </td>              
         <td>{parcel.deliveryStatus}</td>              
         <td className='flex'>
           <button className='btn btn-square hover:bg-primary'>
